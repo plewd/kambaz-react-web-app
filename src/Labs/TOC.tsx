@@ -9,7 +9,7 @@ export default function TOC() {
             <li><Link to="/Labs/Lab3">Lab 3</Link></li>
             <li><Link to="/Kambaz">Kambaz</Link></li>
             <li>
-                <a href="https://github.com/plewd/kambaz-react-web-app" target="_blank" rel="noopener noreferrer">
+                <a id="wd-github" href="https://github.com/plewd/kambaz-react-web-app" target="_blank" rel="noopener noreferrer">
                     Github
                 </a>
             </li>
