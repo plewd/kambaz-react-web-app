@@ -27,8 +27,13 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
     border-left: 3px solid green !important;
 }
 .wd-dashboard-course-title {
-    white-space: nowrap;        /* Prevents text from wrapping to the next line */
-    overflow: hidden;           /* Hides any overflowing content */
-    text-overflow: ellipsis;    /* Displays '...' when text overflows */
-    max-width: 100%;            /* Ensures it doesn't take more space than necessary */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.wireframe {
+    border: 1px solid #d3d3d3;
+    padding: 20px;
+    border-radius: 8px;
 }

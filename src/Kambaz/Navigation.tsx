@@ -39,7 +39,7 @@ export default function KambazNavigation() {
                   bg-black text-center border-0">
                 <MdOutlineInbox className="fs-1 text-danger" /><br />
                 Inbox </Link>
-            <Link to="/Kambaz/Labs" id="wd-course-link"
+            <Link to="/Labs/Lab1" id="wd-course-link"
                   className="list-group-item text-white
                   bg-black text-center border-0">
                 <IoFlaskOutline className="fs-1 text-danger" /><br />
