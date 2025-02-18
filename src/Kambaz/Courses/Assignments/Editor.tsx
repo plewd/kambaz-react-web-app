@@ -1,11 +1,19 @@
 import { Button, Form, FormControl, FormGroup, FormLabel, FormSelect, InputGroup } from "react-bootstrap";
+import {useParams} from "react-router-dom";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
+    const {aid} = useParams();
+    const { cid } = useParams();
+    const assignment = db.assignments.find(
+        (assignment) => assignment._id === aid && assignment.course === cid
+    );
+
     return (
         <div>
             <FormGroup className="mb-3">
-                <FormLabel>Assignment Name</FormLabel>
-                <FormControl placeholder="A1"/>
+                <FormLabel>ASSIGNMENT NAME</FormLabel>
+                <FormControl placeholder={assignment?.title}/>
             </FormGroup>
 
             <FormGroup className="mb-3">
@@ -14,17 +22,16 @@ export default function AssignmentEditor() {
                     as="textarea"
                     style={{height: "250px"}}
                     rows={5}
-                    placeholder={`The assignment is available online.\nSubmit a link to the landing page of your Web application running on Netlify.\nThe landing page should include the following:\n• Your full name and section\n• Links to each of the lab assignments\n• Link to the Kanbas application\n• Links to all relevant source code repositories\n\nThe Kanbas application should include a link to navigate back to the landing page.`}
+                    placeholder={assignment?.description}
                 />
             </FormGroup>
-
 
             <FormGroup className="mb-3 d-flex align-items-center">
                 <div className="wd-grid-col-third-page text-end pe-2">
                     Points
                 </div>
                 <div className="wd-grid-col-two-thirds-page">
-                    <FormControl type="number" placeholder="100"/>
+                    <FormControl type="number" placeholder={assignment?.points.toString()}/>
                 </div>
             </FormGroup>
 

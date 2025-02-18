@@ -4,8 +4,15 @@ import {BsGripVertical} from "react-icons/bs";
 import ModuleControlButtons from "../Modules/ModuleControlButtons.tsx";
 import LessonControlButtons from "../Modules/LessonControlButtons.tsx";
 import AssignmentIcons from "./AssignmentIcons.tsx";
+import {Link, useParams} from "react-router-dom";
+import * as db from "../../Database";
 
 export default function Assignments() {
+    const { cid } = useParams();
+    const assignments = db.assignments.filter(
+        (assignment) => assignment.course === cid
+    );
+
     return (
         <div id="wd-assignment-view">
             <Controls/>
@@ -20,82 +27,39 @@ export default function Assignments() {
                             </div>
                             <ModuleControlButtons/>
                         </div>
+
                         <ListGroup className="wd-lessons rounded-0">
-                            <ListGroup.Item className="wd-lesson p-3 ps-1">
-                                <div>
-                                    <AssignmentIcons/>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <a href="#/Kambaz/Courses/1234/Assignments/123"
-                                               className="wd-assignment-link"
-                                               style={{
-                                                   fontSize: '20px',
-                                                   fontWeight: '500',
-                                                   textDecoration: 'none',
-                                                   color: 'black'
-                                               }}>
-                                                A1
-                                            </a>
-                                            <div className="fs-6">
-                                                <span className="text-danger">Multiple Modules</span> |
-                                                <strong> Not available until</strong> February 17 at 12:00am |
-                                                <strong> Due</strong> February 24  at 11:59pm | 100 pts
+                            {assignments.map((assignment) => (
+                                <ListGroup.Item
+                                    className="wd-lesson p-3 ps-1"
+                                    as={Link}
+                                    to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}>
+                                    <div>
+                                        <AssignmentIcons/>
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                                                   className="wd-assignment-link"
+                                                   style={{
+                                                       fontSize: '20px',
+                                                       fontWeight: '500',
+                                                       textDecoration: 'none',
+                                                       color: 'black'
+                                                   }}>
+                                                    {assignment.title}
+                                                </a>
+                                                <div className="fs-6">
+                                                    <span className="text-danger">Multiple Modules</span> |
+                                                    <strong> Not available until</strong> {assignment.available} |
+                                                    <strong> Due</strong> {assignment.due} | {assignment.points} pts
+                                                </div>
                                             </div>
+                                            <LessonControlButtons/>
                                         </div>
-                                        <LessonControlButtons/>
                                     </div>
-                                </div>
-                            </ListGroup.Item>
-                            <ListGroup.Item className="wd-lesson p-3 ps-1">
-                                <div>
-                                    <AssignmentIcons/>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <a href="#/Kambaz/Courses/1234/Assignments/123"
-                                               className="wd-assignment-link"
-                                               style={{
-                                                   fontSize: '20px',
-                                                   fontWeight: '500',
-                                                   textDecoration: 'none',
-                                                   color: 'black'
-                                               }}>
-                                                A2
-                                            </a>
-                                            <div className="fs-6">
-                                                <span className="text-danger">Multiple Modules</span> |
-                                                <strong> Not available until</strong> March 8 at 12:00am |
-                                                <strong> Due</strong> March 15 at 11:59pm | 100 pts
-                                            </div>
-                                        </div>
-                                        <LessonControlButtons/>
-                                    </div>
-                                </div>
-                            </ListGroup.Item>
-                            <ListGroup.Item className="wd-lesson p-3 ps-1">
-                                <div>
-                                    <AssignmentIcons/>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <a href="#/Kambaz/Courses/1234/Assignments/123"
-                                               className="wd-assignment-link"
-                                               style={{
-                                                   fontSize: '20px',
-                                                   fontWeight: '500',
-                                                   textDecoration: 'none',
-                                                   color: 'black'
-                                               }}>
-                                                A3
-                                            </a>
-                                            <div className="fs-6">
-                                                <span className="text-danger">Multiple Modules</span> |
-                                                <strong> Not available until</strong> April 12 at 12:00am |
-                                                <strong> Due</strong> April 19 at 11:59pm | 100 pts
-                                            </div>
-                                        </div>
-                                        <LessonControlButtons/>
-                                    </div>
-                                </div>
-                            </ListGroup.Item>
+                                </ListGroup.Item>
+                            ))}
+
                         </ListGroup>
                     </ListGroup.Item>
                 </ListGroup>
