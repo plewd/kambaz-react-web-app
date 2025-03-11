@@ -8,7 +8,6 @@ import {FormControl} from "react-bootstrap";
 import { addModule, editModule, updateModule, deleteModule }
     from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
-import FacultyProtected from "../../Account/FacultyProtected.tsx";
 
 export default function Modules() {
     const { cid } = useParams();
@@ -18,13 +17,11 @@ export default function Modules() {
 
     return (
         <ul id="wd-modules" className="list-group rounded-0">
-            <FacultyProtected>
                 <ModulesControls moduleName={moduleName} setModuleName={setModuleName}
                                  addModule={() => {
                                      dispatch(addModule({ name: moduleName, course: cid }));
                                      setModuleName("");
                                  }} />
-            </FacultyProtected>
             {modules
                 .filter((module: any) => module.course === cid)
                 .map((module: any) => (
@@ -42,6 +39,7 @@ export default function Modules() {
                                              }}
                                              defaultValue={module.name}/>
                             )}
+
                             <ModuleControlButtons moduleId={module._id}
                                                   deleteModule={(moduleId) => {
                                                       dispatch(deleteModule(moduleId));

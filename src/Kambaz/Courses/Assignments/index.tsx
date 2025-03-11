@@ -1,7 +1,6 @@
 import Controls from "./Controls.tsx";
 import {ListGroup} from "react-bootstrap";
 import {BsGripVertical} from "react-icons/bs";
-import ModuleControlButtons from "../Modules/ModuleControlButtons.tsx";
 import LessonControlButtons from "../Modules/LessonControlButtons.tsx";
 import AssignmentIcons from "./AssignmentIcons.tsx";
 import {Link, useParams} from "react-router-dom";
@@ -25,7 +24,7 @@ export default function Assignments() {
                                 <BsGripVertical className="me-2 fs-3"/>
                                 <span>ASSIGNMENTS</span>
                             </div>
-                            <ModuleControlButtons/>
+                            {/* <ModuleControlButtons /> --- doesnt work yet */}
                         </div>
 
                         <ListGroup className="wd-lessons rounded-0">

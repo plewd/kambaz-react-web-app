@@ -59,21 +59,25 @@ export default function Dashboard(
                                                        style={{height: "100px"}}>
                                                 {course.description} </Card.Text>
                                             <Button variant="primary"> Go </Button>
-                                            <button onClick={(event) => {
-                                                event.preventDefault();
-                                                deleteCourse(course._id);
-                                            }} className="btn btn-danger float-end"
-                                                    id="wd-delete-course-click">
-                                                Delete
-                                            </button>
-                                            <button id="wd-edit-course-click"
-                                                    onClick={(event) => {
-                                                        event.preventDefault();
-                                                        setCourse(course);
-                                                    }}
-                                                    className="btn btn-warning me-2 float-end">
-                                                Edit
-                                            </button>
+                                            <FacultyProtected>
+                                                <button onClick={(event) => {
+                                                    event.preventDefault();
+                                                    deleteCourse(course._id);
+                                                }} className="btn btn-danger float-end"
+                                                        id="wd-delete-course-click">
+                                                    Delete
+                                                </button>
+                                            </FacultyProtected>
+                                            <FacultyProtected>
+                                                <button id="wd-edit-course-click"
+                                                        onClick={(event) => {
+                                                            event.preventDefault();
+                                                            setCourse(course);
+                                                        }}
+                                                        className="btn btn-warning me-2 float-end">
+                                                    Edit
+                                                </button>
+                                            </FacultyProtected>
                                         </Card.Body>
                                     </Link>
                                 </Card>
