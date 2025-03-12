@@ -1,68 +1,73 @@
 import Controls from "./Controls.tsx";
 import {ListGroup} from "react-bootstrap";
 import {BsGripVertical} from "react-icons/bs";
-import LessonControlButtons from "../Modules/LessonControlButtons.tsx";
+import AssignmentControlButtons from "./AssignmentControlButtons.tsx";
+import {FaCaretDown} from "react-icons/fa";
 import AssignmentIcons from "./AssignmentIcons.tsx";
 import {Link, useParams} from "react-router-dom";
-import * as db from "../../Database";
+import {useDispatch, useSelector} from "react-redux";
+import ControlButtons from "./ControlButtons.tsx";
+import {deleteAssignment} from "./reducer.ts";
 
 export default function Assignments() {
-    const { cid } = useParams();
-    const assignments = db.assignments.filter(
-        (assignment) => assignment.course === cid
-    );
+    const {cid} = useParams();
+
+    const assignments = useSelector((state: any) => state.assignmentsReducer.assignments)
+        .filter((assignment: any) => assignment.course === cid);
+
+    const formatDueDate = (dateTime: string) => {
+        if (!dateTime) return '';
+        const date = new Date(dateTime);
+        const month = date.toLocaleString('default', {month: 'short'});
+        const day = date.getDate();
+        const time = date.toLocaleString('default', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        }).toLowerCase();
+        return `${month} ${day} at ${time}`
+    }
+
+    const dispatch = useDispatch();
 
     return (
-        <div id="wd-assignment-view">
-            <Controls/>
-            <div className="mt-5">
-                <ListGroup className="rounded-0" id="wd-modules">
-                    <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-                        <div
-                            className="wd-title p-3 ps-2 bg-secondary d-flex justify-content-between align-items-center">
-                            <div className="d-flex align-items-center">
-                                <BsGripVertical className="me-2 fs-3"/>
-                                <span>ASSIGNMENTS</span>
-                            </div>
-                            {/* <ModuleControlButtons /> --- doesnt work yet */}
-                        </div>
-
-                        <ListGroup className="wd-lessons rounded-0">
-                            {assignments.map((assignment) => (
-                                <ListGroup.Item
-                                    className="wd-lesson p-3 ps-1"
-                                    as={Link}
-                                    to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}>
+        <div>
+            <Controls/><br/><br/><br/><br/>
+            <ListGroup className="rounded-0" id="wd-modules">
+                <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3"/><FaCaretDown className="me-2 fs-4"/>
+                        <strong>ASSIGNMENTS</strong> <AssignmentControlButtons/>
+                    </div>
+                    <ListGroup className="wd-lessons rounded-0">
+                        {assignments.map((assignment: any) => (
+                            <ListGroup.Item
+                                className="wd-lesson p-3 ps-1"
+                                key={assignment._id}>
+                                <div>
+                                    <AssignmentIcons/>
                                     <div>
-                                        <AssignmentIcons/>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <a href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
-                                                   className="wd-assignment-link"
-                                                   style={{
-                                                       fontSize: '20px',
-                                                       fontWeight: '500',
-                                                       textDecoration: 'none',
-                                                       color: 'black'
-                                                   }}>
-                                                    {assignment.title}
-                                                </a>
-                                                <div className="fs-6">
-                                                    <span className="text-danger">Multiple Modules</span> |
-                                                    <strong> Not available until</strong> {assignment.available} |
-                                                    <strong> Due</strong> {assignment.due} | {assignment.points} pts
-                                                </div>
-                                            </div>
-                                            <LessonControlButtons/>
+                                        <Link
+                                            to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                                            className="wd-assignment-link"
+                                            style={{fontSize: '16px', fontWeight: '500'}}>
+                                            {assignment.title}
+                                        </Link>
+                                        <div>Multiple Modules
+                                            | <strong> Due </strong> {formatDueDate(assignment.due)} | {assignment.pts} pts
                                         </div>
                                     </div>
-                                </ListGroup.Item>
-                            ))}
-
-                        </ListGroup>
-                    </ListGroup.Item>
-                </ListGroup>
-            </div>
+                                    <ControlButtons assignmentId={assignment._id}
+                                                    assignmentTitle={assignment.title}
+                                                    deleteAssignment={(assignmentId) => {
+                                                        dispatch(deleteAssignment(assignmentId));
+                                                    }}/>
+                                </div>
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                </ListGroup.Item>
+            </ListGroup>
         </div>
     );
 }

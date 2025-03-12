@@ -3,7 +3,7 @@ import GreenCheckmark from "./GreenCheckmark";
 import { Button, Dropdown } from "react-bootstrap";
 import ModuleEditor from "./ModuleEditor";
 import {useState} from "react";
-import FacultyProtected from "../../Account/FacultyProtected";
+import FacultyRouteProtected from "../../Account/FacultyRouteProtected.tsx";
 
 export default function ModulesControls(
     { moduleName, setModuleName, addModule }:
@@ -13,8 +13,8 @@ export default function ModulesControls(
     const handleShow = () => setShow(true);
 
     return (
-        <div id="wd-modules-controls" className="text-nowrap">
-            <FacultyProtected>
+        <div id="wd-modules-controls" className="text-nowrap mb-3">
+            <FacultyRouteProtected>
                 <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn" onClick={handleShow} >
                     <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                     Module
@@ -46,6 +46,6 @@ export default function ModulesControls(
                 <Button variant="secondary" size="lg" id="wd-collapse-all" className="btn btn-secondary me-1 float-end">Collapse All</Button>
                 <ModuleEditor show={show} handleClose={handleClose} dialogTitle="Add Module"
                               moduleName={moduleName} setModuleName={setModuleName} addModule={addModule} />
-            </FacultyProtected>
+            </FacultyRouteProtected>
         </div>
     );}

@@ -16,7 +16,10 @@ export default function Profile() {
         dispatch(setCurrentUser(null));
         navigate("/Kambaz/Account/Signin");
     };
-    useEffect(() => { fetchProfile(); }, []);
+    useEffect(() => {
+        fetchProfile();
+    }, [currentUser]);
+    
     return (
         <div className="wd-profile-screen">
             <h3>Profile</h3>

@@ -1,131 +1,116 @@
-import { Button, Form, FormControl, FormGroup, FormLabel, FormSelect, InputGroup } from "react-bootstrap";
-import {useParams} from "react-router-dom";
-import * as db from "../../Database";
+import {Button, Form, FormControl, FormGroup, FormLabel, InputGroup} from "react-bootstrap";
+import {useNavigate, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import { v4 as uuidv4 } from "uuid";
+import {addAssignment, updateAssignment} from "./reducer.ts";
 
 export default function AssignmentEditor() {
-    const {aid} = useParams();
-    const { cid } = useParams();
-    const assignment = db.assignments.find(
-        (assignment) => assignment._id === aid && assignment.course === cid
-    );
+    const {cid, aid} = useParams();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const assignment = useSelector((state: any) => state.assignmentsReducer.assignments)
+        .find((assignment: any) => assignment._id === aid);
+
+    const now = new Date().toISOString().slice(0, 16);
+
+    const [assignmentData, setAssignment] = useState({
+        _id: assignment?._id || uuidv4(),
+        title: assignment?.title || "New Assignment",
+        course: assignment?.course || cid,
+        description: assignment?.description || "Assignment description",
+        pts: assignment?.pts || 100,
+        due: assignment?.due || now,
+        available_from: assignment?.available_from || now,
+        available_until: assignment?.available_until || now
+    });
+
+    const handleSave = () => {
+        if (aid === 'new') {
+            dispatch(addAssignment(assignmentData));
+        }
+        else {
+            dispatch(updateAssignment(assignmentData));
+        }
+        navigate(`/Kambaz/Courses/${cid}/Assignments`);
+    }
+
+    const handleCancel = () => {
+        navigate(`/Kambaz/Courses/${cid}/Assignments`);
+    }
 
     return (
         <div>
             <FormGroup className="mb-3">
-                <FormLabel>ASSIGNMENT NAME</FormLabel>
-                <FormControl placeholder={assignment?.title}/>
+                <FormLabel>Assignment Name</FormLabel>
+                <FormControl defaultValue={assignmentData.title}
+                             onChange={(e) => setAssignment({...assignmentData, title: e.target.value})}/>
             </FormGroup>
-
             <FormGroup className="mb-3">
-                <FormLabel>Assignment Instructions</FormLabel>
-                <FormControl
-                    as="textarea"
-                    style={{height: "250px"}}
-                    rows={5}
-                    placeholder={assignment?.description}
-                />
+                <FormControl as="textarea" rows={3} defaultValue={assignmentData.description}
+                             onChange={(e) => setAssignment({...assignmentData, description: e.target.value})}/>
             </FormGroup>
-
             <FormGroup className="mb-3 d-flex align-items-center">
                 <div className="wd-grid-col-third-page text-end pe-2">
                     Points
                 </div>
                 <div className="wd-grid-col-two-thirds-page">
-                    <FormControl type="number" placeholder={assignment?.points.toString()}/>
+                    <FormControl type="number"
+                                 defaultValue={assignmentData.pts}
+                                 onChange={(e) => setAssignment({...assignmentData, pts: (parseInt(e.target.value, 10))})}/>
                 </div>
             </FormGroup>
-
-            <FormGroup className="mb-3 d-flex align-items-center">
-                <div className="wd-grid-col-third-page text-end pe-2">
-                    Assignment Group
-                </div>
-                <div className="wd-grid-col-two-thirds-page">
-                    <FormSelect>
-                        <option value="1">ASSIGNMENTS</option>
-                    </FormSelect>
-                </div>
-            </FormGroup>
-
-            <FormGroup className="mb-3 d-flex align-items-center">
-                <div className="wd-grid-col-third-page text-end pe-2">
-                    Display Grade as
-                </div>
-                <div className="wd-grid-col-two-thirds-page">
-                    <FormSelect>
-                        <option value="1">Percentage</option>
-                    </FormSelect>
-                </div>
-            </FormGroup>
-
-            <FormGroup className="mb-3 d-flex">
-                <div className="wd-grid-col-third-page text-end pe-2">
-                    Submission Type
-                </div>
-                <div className="wd-grid-col-two-thirds-page">
-                    <div className="wireframe p-3">
-                        <FormSelect>
-                            <option value="1">Online</option>
-                        </FormSelect>
-                        <div className="p-2 mt-3">
-                            <strong>Online Entry Options</strong>
-                            <div className="mt-2">
-                                <Form.Check label="Text Entry"/>
-                                <Form.Check label="Website URL"/>
-                                <Form.Check label="Media Recordings"/>
-                                <Form.Check label="Student Annotation"/>
-                                <Form.Check label="File Uploads"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </FormGroup>
-
             <FormGroup className="mb-3 d-flex">
                 <div className="wd-grid-col-third-page text-end pe-2">
                     Assign
                 </div>
-                <div className="wireframe wd-grid-col-two-thirds-page">
-                    <div className="p-3">
-                        <FormGroup>
-                            <Form.Label><strong>Assign to</strong></Form.Label>
-                            <FormControl placeholder="Everyone"/>
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Form.Label>Due</Form.Label>
-                            <InputGroup>
-                                <FormControl type="date"/>
-                            </InputGroup>
-                        </FormGroup>
-
-                        <div className="wd-grid-col-half-page pe-2">
+                <div className="wd-grid-col-two-thirds-page">
+                    <div className="border-grey">
+                        <div className="pe-2">
                             <FormGroup>
-                                <Form.Label>Available from</Form.Label>
+                                <Form.Label> Due </Form.Label>
                                 <InputGroup>
-                                    <FormControl type="date"/>
+                                    <FormControl type="datetime-local" defaultValue={assignmentData.due}
+                                                 onChange={(e) => setAssignment({...assignmentData, due: e.target.value})}/>
                                 </InputGroup>
                             </FormGroup>
-                        </div>
 
-                        <div className="wd-grid-col-half-page pe-2">
-                            <FormGroup>
-                                <Form.Label>Until</Form.Label>
-                                <InputGroup>
-                                    <FormControl type="date"/>
-                                </InputGroup>
-                            </FormGroup>
+                            <div className="wd-grid-col-half-page pe-2">
+                                <FormGroup>
+                                    <Form.Label> Available from </Form.Label>
+                                    <InputGroup>
+                                        <FormControl type="datetime-local"
+                                                     defaultValue={assignmentData.available_from}
+                                                     onChange={(e) => setAssignment({...assignmentData, available_from: e.target.value})}/>
+                                    </InputGroup>
+                                </FormGroup>
+                            </div>
+
+                            <div className="wd-grid-col-half-page pe-2">
+                                <FormGroup>
+                                    <Form.Label> Until </Form.Label>
+                                    <InputGroup>
+                                        <FormControl type="datetime-local"
+                                                     defaultValue={assignmentData.available_until}
+                                                     onChange={(e) => setAssignment({...assignmentData, available_until: e.target.value})}/>
+                                    </InputGroup>
+                                </FormGroup>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
                         </div>
                     </div>
                 </div>
             </FormGroup>
-            
             <hr/>
-
             <div className="text-nowrap">
-                <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+                <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn" onClick={handleSave}>
                     Save
                 </Button>
-                <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-view-progress">
+                <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-view-progress" onClick={handleCancel}>
                     Cancel
                 </Button>
             </div>

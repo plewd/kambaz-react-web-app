@@ -1,4 +1,5 @@
 import {Route, Routes, useLocation} from "react-router";
+
 import CourseNavigation from "./Navigation.tsx";
 import Modules from "./Modules";
 import Home from "./Home";
@@ -7,10 +8,12 @@ import AssignmentEditor from "./Assignments/Editor.tsx";
 import {FaAlignJustify} from "react-icons/fa";
 import PeopleTable from "./People/Table.tsx";
 import {useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-export default function Courses({ courses }: { courses: any[]; }) {
-    const { cid } = useParams();
-    const course = courses.find((course) => course._id === cid);
+export default function Courses() {
+    const {cid} = useParams();
+    const courses = useSelector((state: any) => state.courseReducer.courses);
+    const course = courses.find((course: any) => course._id === cid);
     const { pathname } = useLocation();
     return (
         <div id="wd-courses">

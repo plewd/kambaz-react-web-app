@@ -6,11 +6,11 @@ import { Button } from "react-bootstrap";
 import {AiOutlineHome} from "react-icons/ai";
 import {IoMdMegaphone} from "react-icons/io";
 import {FiBarChart2} from "react-icons/fi";
-import FacultyProtected from "../../Account/FacultyProtected.tsx";
+import FacultyRouteProtected from "../../Account/FacultyRouteProtected.tsx";
 
 export default function CourseStatus() {
     return (
-        <FacultyProtected>
+        <FacultyRouteProtected>
             <div id="wd-course-status" style={{ width: "350px" }}>
                 <h2>Course Status</h2>
                 <div className="d-flex">
@@ -48,6 +48,6 @@ export default function CourseStatus() {
                     <MdNotifications className="me-2 fs-5" /> View Course Notifications
                 </Button>
             </div>
-        </FacultyProtected>
+        </FacultyRouteProtected>
     );
 }
