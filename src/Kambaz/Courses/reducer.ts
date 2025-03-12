@@ -18,7 +18,7 @@ const coursesSlice = createSlice({
                 number: "New Number",
                 startDate: "2023-09-10",
                 endDate: "2023-12-15",
-                image: "/images/reactjs.jpg",
+                image: "/images/react.svg",
                 description: course.description,
             };
             state.courses = [...state.courses, newCourse] as any;

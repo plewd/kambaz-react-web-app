@@ -12,14 +12,12 @@ export default function Dashboard() {
     const enrollments = useSelector((state: any) => state.courseReducer.enrollments);
     const courses = useSelector((state: any) => state.courseReducer.courses);
     const [showEnrolled, setShowEnrolled] = useState(true);
-
-
+    
     const [course, setCourse] = useState<any>({
         _id: "placeholderID", name: "New Course", number: "New Number",
         startDate: "2025-09-08", endDate: "2025-12-19",
-        image: "/images/reactjs.jpg", description: "New Description"
+        image: "/images/react.svg", description: "New Description"
     });
-
     const handleNewCourse = () => {
         const newCourseId = uuidv4();
         dispatch(addCourse({...course, _id: newCourseId}));
@@ -28,14 +26,11 @@ export default function Dashboard() {
             course: newCourseId
         }));
     }
-
     const handleUpdateCourse = () => {
         dispatch(updateCourse(course));
     }
-
     const dispatch = useDispatch();
-
-
+    
     return (
         <div className="p-4" id="wd-dashboard">
             <h1 id="wd-dashboard-title">Dashboard</h1>
@@ -87,7 +82,7 @@ export default function Dashboard() {
                                     <Card>
                                         <Link to={`/Kambaz/Courses/${course._id}/Home`}
                                               className="wd-dashboard-course-link text-decoration-none text-dark">
-                                            <Card.Img src="/images/reactjs.jpg" variant="top" width="100%"
+                                            <Card.Img src="/images/react.svg" variant="top" width="100%"
                                                       height={160}/>
                                             <Card.Body className="card-body">
                                                 <Card.Title
@@ -145,7 +140,7 @@ export default function Dashboard() {
                             <div key={course._id} className="col" style={{width: "300px"}}>
                                 <div className="card">
                                     <Card>
-                                        <Card.Img src="/images/reactjs.jpg" variant="top" width="100%"
+                                        <Card.Img src="/images/react.svg" variant="top" width="100%"
                                                   height={160}/>
                                         <Card.Body className="card-body">
                                             <Card.Title
