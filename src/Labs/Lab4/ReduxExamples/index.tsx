@@ -1,7 +1,7 @@
 import HelloRedux from "./HelloRedux";
 import CounterRedux from "./CounterRedux";
 import AddRedux from "./AddRedux";
-import TodoForm from "./todos/TodoForm.tsx";
+import TodoList from "./todos/TodoList.tsx";
 
 export default function ReduxExamples() {
     return(
@@ -10,7 +10,7 @@ export default function ReduxExamples() {
             <HelloRedux/>
             <CounterRedux/>
             <AddRedux/>
-            <TodoForm/>
+            <TodoList/>
         </div>
     );
 };
