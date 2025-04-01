@@ -8,8 +8,9 @@ import {addCourse, addEnrollment, deleteCourse, deleteEnrollment, updateCourse} 
 import StudentRouteProtected from "./Account/StudentRouteProtected.tsx";
 
 export default function Dashboard() {
+    
     const {currentUser} = useSelector((state: any) => state.accountReducer);
-    const enrollments = useSelector((state: any) => state.courseReducer.enrollments);
+    // const enrollments = useSelector((state: any) => state.courseReducer.enrollments);
     const courses = useSelector((state: any) => state.courseReducer.courses);
     const [showEnrolled, setShowEnrolled] = useState(true);
     
@@ -53,12 +54,7 @@ export default function Dashboard() {
                 <hr/>
             </FacultyRouteProtected>
             <div className="d-flex justify-content-between align-items-center">
-                <h2 id="wd-dashboard-published">Published Courses ({courses.filter((course: any) => !showEnrolled ||
-                    enrollments.some(
-                        (enrollment: any) =>
-                            enrollment.user === currentUser._id &&
-                            enrollment.course === course._id
-                    )).length})</h2>
+                <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
                 <StudentRouteProtected>
                     <Button variant="primary" onClick={() => {
                         setShowEnrolled(!showEnrolled);
@@ -70,13 +66,7 @@ export default function Dashboard() {
             <hr/>
             <div className="row" id="wd-dashboard-courses">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {courses.filter((course: any) =>
-                        enrollments.some(
-                            (enrollment: any) =>
-                                enrollment.user === currentUser._id &&
-                                enrollment.course === course._id
-                        ))
-                        .map((course: any) => (
+                    {courses.map((course: any) => (
                             <div key={course._id} className="col" style={{width: "300px"}}>
                                 <div className="card">
                                     <Card>
@@ -130,13 +120,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         ))}
-                    {courses.filter((course: any) => !showEnrolled &&
-                        !enrollments.some(
-                            (enrollment: any) =>
-                                enrollment.user === currentUser._id &&
-                                enrollment.course === course._id
-                        ))
-                        .map((course: any) => (
+                    {courses.map((course: any) => (
                             <div key={course._id} className="col" style={{width: "300px"}}>
                                 <div className="card">
                                     <Card>
