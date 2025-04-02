@@ -21,7 +21,6 @@ const assignmentsSlice = createSlice({
                 description: assignment.description,
                 modules: assignment.modules,
             };
-            console.log("Adding assignment:", newAssignment);
 
             state.assignments = [...state.assignments, newAssignment] as any;
         },
@@ -34,8 +33,6 @@ const assignmentsSlice = createSlice({
             state.assignments = state.assignments.map((a: any) =>
                 a._id === assignment._id ? assignment : a
             ) as any;
-            console.log(assignment._id);
-            console.log("updating assignment:", assignment);
         },
     },
 });

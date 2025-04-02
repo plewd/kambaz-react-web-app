@@ -6,8 +6,8 @@ import {useState} from "react";
 import DeletePopup from "./DeletePopup.tsx";
 
 export default function ControlButtons(
-    {assignmentId, assignmentTitle, deleteAssignment}: {
-        assignmentId: string; assignmentTitle: string, deleteAssignment: (assignmentId: string) => void;
+    {assignmentId, deleteAssignment}: {
+        assignmentId: string; deleteAssignment: (assignmentId: string) => void;
     }) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -25,7 +25,7 @@ export default function ControlButtons(
                 <DeletePopup
                     show={show}
                     handleClose={handleClose}
-                    assignmentTitle={assignmentTitle}
+                    assignmentId={assignmentId}
                     confirmDelete={handleDelete}
                 />
             </div>

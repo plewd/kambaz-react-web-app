@@ -47,10 +47,8 @@ export default function Dashboard({
             );
             setEnrollments(updatedEnrollments || []);
             window.location.reload();
-            alert("User added");
         } catch (error) {
             console.error("Error adding user to course:", error);
-            alert("Failed to add user. Please try again.");
         }
     };
     const handleDeleteUser = async (courseId: string) => {
@@ -58,10 +56,8 @@ export default function Dashboard({
             await coursesClient.deleteUserFromCourse(courseId, currentUser._id);
             courses = await userClient.findMyCourses();
             window.location.reload();
-            alert("User unenrolled successfully!");
         } catch (error) {
             console.error("Error deleting user from course:", error);
-            alert("Failed to delete user. Please try again.");
         }
     };
 

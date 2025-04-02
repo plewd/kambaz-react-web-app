@@ -6,7 +6,6 @@ import {
     BsJournals,
 } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
-import LessonControlButtons from "../Modules/LessonControlButtons";
 import Controls from "./Controls";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useParams } from "react-router";
@@ -17,6 +16,7 @@ import DeletePopup from "./DeletePopup";
 import FacultyRouteProtected from "../../Account/FacultyRouteProtected";
 import * as coursesClient from "../client";
 import * as assignmentsClient from "./client";
+import ControlButtons from "./ControlButtons.tsx";
 
 export default function Assignments() {
     const { cid } = useParams();
@@ -106,7 +106,10 @@ export default function Assignments() {
                                         className="text-danger me-2 mb-1"
                                         onClick={() => handleShow(assignment._id)}
                                     />
-                                    <LessonControlButtons />
+                                    <ControlButtons 
+                                        assignmentId={assignment._id}
+                                        deleteAssignment={deleteSelectedAssignment}>
+                                    </ControlButtons>
                                     <DeletePopup
                                         show={selectedAssignmentId === assignment._id}
                                         handleClose={handleClose}
