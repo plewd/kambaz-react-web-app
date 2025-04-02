@@ -1,10 +1,15 @@
-import {useSelector} from "react-redux";
-
-export default function FacultyRouteProtected({children}: { children: any }) {
-    const {currentUser} = useSelector((state: any) => state.accountReducer);
-    if (currentUser && currentUser.role === "FACULTY") {
+import { useSelector } from "react-redux";
+export default function FacultyRouteProtected({
+                                             studentAccess,
+                                             children,
+                                         }: {
+    studentAccess: any;
+    children: any;
+}) {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    if (currentUser.role == "FACULTY") {
         return children;
     } else {
-        return null;
+        return studentAccess;
     }
 }

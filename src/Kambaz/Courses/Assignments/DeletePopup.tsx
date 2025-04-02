@@ -1,10 +1,10 @@
 import {Button, Modal} from "react-bootstrap";
 
-export default function DeletePopup({show, handleClose, assignmentTitle, confirmDelete}: {
+export default function DeletePopup({show, handleClose, assignmentId, confirmDelete}: {
     show: boolean;
     handleClose: () => void;
-    assignmentTitle: string;
-    confirmDelete: () => void;
+    assignmentId: string;
+    confirmDelete: (assignmentId: string) => void;
 }) {
     return (
         <Modal show={show} onHide={handleClose}>
@@ -12,13 +12,13 @@ export default function DeletePopup({show, handleClose, assignmentTitle, confirm
                 <Modal.Title>Delete Assignment</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Are you sure you want to remove {assignmentTitle}?
+                Are you sure you want to remove this assignment?
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}> Cancel </Button>
                 <Button variant="danger"
                         onClick={() => {
-                            confirmDelete();
+                            confirmDelete(assignmentId);
                             handleClose();
                         }}> Delete </Button>
             </Modal.Footer>

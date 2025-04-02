@@ -4,7 +4,7 @@ import GreenCheckmark from "../Modules/GreenCheckmark.tsx";
 
 export default function AssignmentControlButtons() {
     return (
-        <FacultyRouteProtected>
+        <FacultyRouteProtected studentAccess={<></>}>
             <div className="d-flex justify-content-end align-items-center">
                 <div className="float-end">
                     <GreenCheckmark/>

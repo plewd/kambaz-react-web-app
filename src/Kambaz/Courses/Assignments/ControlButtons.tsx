@@ -16,18 +16,18 @@ export default function ControlButtons(
         deleteAssignment(assignmentId);
     };
     return (
-        <FacultyRouteProtected>
+        <FacultyRouteProtected studentAccess={<></>}>
             <div className="float-end">
-        <FaTrash className="text-danger me-2 mb-1" onClick={handleShow}/>
-    <GreenCheckmark/>
-    <IoEllipsisVertical className="fs-4"/>
+                <FaTrash className="text-danger me-2 mb-1" onClick={handleShow}/>
+                <GreenCheckmark/>
+                <IoEllipsisVertical className="fs-4"/>
 
-    <DeletePopup
-        show={show}
-    handleClose={handleClose}
-    assignmentTitle={assignmentTitle}
-    confirmDelete={handleDelete}
-    />
-    </div>
-    </FacultyRouteProtected>);
+                <DeletePopup
+                    show={show}
+                    handleClose={handleClose}
+                    assignmentTitle={assignmentTitle}
+                    confirmDelete={handleDelete}
+                />
+            </div>
+        </FacultyRouteProtected>);
 }
