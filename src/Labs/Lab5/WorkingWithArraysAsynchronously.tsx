@@ -123,7 +123,7 @@ export default function WorkingWithArraysAsynchronously() {
                         ></span>
                     </ListGroup.Item>
                 ))}
-            </ListGroup>{" "}
+            </ListGroup>
             <hr />
         </div>
     );

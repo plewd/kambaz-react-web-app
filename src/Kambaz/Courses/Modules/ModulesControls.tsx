@@ -14,7 +14,7 @@ export default function ModulesControls(
 
     return (
         <div id="wd-modules-controls" className="text-nowrap mb-3">
-            <FacultyRouteProtected>
+            <FacultyRouteProtected studentAccess={<></>}>
                 <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn" onClick={handleShow} >
                     <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                     Module

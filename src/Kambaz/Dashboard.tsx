@@ -137,13 +137,13 @@ export default function Dashboard({
                                     />
                                     <Card.Body className="card-body">
                                         <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                                            {course.name}{" "}
+                                            {course.name}
                                         </Card.Title>
                                         <Card.Text
                                             className="wd-dashboard-course-description overflow-hidden"
                                             style={{ height: "100px" }}
                                         >
-                                            {course.description}{" "}
+                                            {course.description}
                                         </Card.Text>
                                         <FacultyRouteProtected studentAccess={<></>}>
                                             <Button

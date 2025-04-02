@@ -10,7 +10,7 @@ export default function Controls() {
 
     return (
         <div className="d-flex justify-content-between align-items-center">
-            <FacultyRouteProtected>
+            <FacultyRouteProtected studentAccess={<></>}>
                 <div className="input-group rounded" style={{maxWidth: "300px"}}>
                 <span className="input-group-text border-0 bg-light">
                     <FaSearch/>

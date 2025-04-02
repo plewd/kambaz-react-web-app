@@ -10,7 +10,7 @@ import FacultyRouteProtected from "../../Account/FacultyRouteProtected.tsx";
 
 export default function CourseStatus() {
     return (
-        <FacultyRouteProtected>
+        <FacultyRouteProtected studentAccess={<></>}>
             <div id="wd-course-status" style={{ width: "350px" }}>
                 <h2>Course Status</h2>
                 <div className="d-flex">

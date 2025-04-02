@@ -96,8 +96,8 @@ export default function Assignments() {
                                         {assignment.title}
                                     </a>
                                     <br />
-                                    {assignment.modules} | <b>Not available until</b>{" "}
-                                    {formatDateForDisplay(assignment.availableDate)} | <b>Due</b>{" "}
+                                    {assignment.modules} | <b>Not available until</b>
+                                    {formatDateForDisplay(assignment.availableDate)} | <b>Due</b>
                                     {formatDateForDisplay(assignment.dueDate)} |{" "}
                                     {assignment.points} pts
                                 </div>

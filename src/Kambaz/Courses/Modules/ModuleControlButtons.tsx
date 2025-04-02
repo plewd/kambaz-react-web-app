@@ -8,7 +8,7 @@ export default function ModuleControlButtons(
     { moduleId, deleteModule, editModule }:
         { moduleId: string; deleteModule: (moduleId: string) => void; editModule: (moduleId: string) => void }) {
     return (
-        <FacultyRouteProtected>
+        <FacultyRouteProtected studentAccess={<></>}>
             <div className="d-flex justify-content-end align-items-center">
                 {/* Right-aligned Div with Text */}
                 <div className="border rounded me-3 p-1">
