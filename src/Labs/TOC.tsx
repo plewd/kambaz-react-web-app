@@ -5,6 +5,7 @@ export default function TOC() {
     const { pathname } = useLocation();
     return (
         <Nav variant="pills" id="wd-toc">
+
             <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab1" id="wd-a1"
                                  active={pathname.includes("Lab1")}> Lab 1 </Nav.Link> </Nav.Item>
             <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab2" id="wd-a2"
@@ -16,6 +17,8 @@ export default function TOC() {
             <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab5" id="wd-a3"
                                  active={pathname.includes("Lab5")}> Lab 5 </Nav.Link> </Nav.Item>
             <Nav.Item> <Nav.Link as={Link} to="/Kambaz" id="wd-a3"> Kambaz </Nav.Link> </Nav.Item>
+            <Nav.Item> <Nav.Link as={Link} to="https://kambaz-node-server-app-el5a.onrender.com" id="wd-a1"
+                                 active={pathname.includes("Node")}> Node Backend Server (Render) </Nav.Link> </Nav.Item>
             <Nav.Item>
                 <Nav.Link id="wd-github" href="https://github.com/plewd">My GitHub</Nav.Link>
             </Nav.Item>
