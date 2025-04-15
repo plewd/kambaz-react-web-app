@@ -5,7 +5,6 @@ import {
     BsPlus,
     BsJournals,
 } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
 import Controls from "./Controls";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useParams } from "react-router";
@@ -36,10 +35,6 @@ export default function Assignments() {
     useEffect(() => {
         fetchAssignments();
     }, []);
-
-    const handleShow = (assignmentId: string) => {
-        setSelectedAssignmentId(assignmentId);
-    };
 
     const handleClose = () => {
         setSelectedAssignmentId(null);
@@ -102,10 +97,7 @@ export default function Assignments() {
                                     {assignment.points} pts
                                 </div>
                                 <FacultyRouteProtected studentAccess={<></>}>
-                                    <FaTrash
-                                        className="text-danger me-2 mb-1"
-                                        onClick={() => handleShow(assignment._id)}
-                                    />
+                                    
                                     <ControlButtons 
                                         assignmentId={assignment._id}
                                         deleteAssignment={deleteSelectedAssignment}>

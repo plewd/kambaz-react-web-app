@@ -28,13 +28,11 @@ export default function Kambaz() {
     ]);
 
     const [enrolling, setEnrolling] = useState<boolean>(false);
-    // Update your findCoursesForUser function
     const findCoursesForUser = async () => {
         try {
-            // Check if currentUser exists before trying to access its properties
             if (!currentUser) {
                 console.log("No user is logged in");
-                setCourses([]);  // Set empty courses array
+                setCourses([]);
                 return;
             }
 
@@ -43,14 +41,12 @@ export default function Kambaz() {
             setCourses(courses);
         } catch (error) {
             console.error(error);
-            setCourses([]); // Set empty courses array on error
+            setCourses([]);
         }
     };
 
-// Similarly update your fetchCourses function
     const fetchCourses = async () => {
         try {
-            // Check if currentUser exists
             if (!currentUser) {
                 console.log("No user is logged in");
                 setCourses([]);
@@ -62,7 +58,6 @@ export default function Kambaz() {
                 currentUser._id
             );
 
-            // Map through all courses and mark those the user is enrolled in
             const courses = allCourses.map((course: any) => {
                 if (enrolledCourses.find((c: any) => c._id === course._id)) {
                     return { ...course, enrolled: true };
@@ -78,9 +73,7 @@ export default function Kambaz() {
         }
     };
 
-// Update your useEffect to only run when currentUser is available
     useEffect(() => {
-        // Only run if currentUser exists
         if (currentUser) {
             if (enrolling) {
                 fetchCourses();

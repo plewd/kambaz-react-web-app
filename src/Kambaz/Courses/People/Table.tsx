@@ -1,13 +1,17 @@
 import {Table} from "react-bootstrap";
 import {FaUserCircle} from "react-icons/fa";
+// import {useParams} from "react-router-dom";
+// import * as db from "../../Database";
 import PeopleDetails from "./Details";
 import {Link} from "react-router-dom";
 
-export default function PeopleTable({ users = [] }: { users?: any[] }) {
+export default function PeopleTable({users = []}: { users?: any[] }) {
+    // const {cid} = useParams();
+    // const {users, enrollments} = db;
     return (
         <div id="wd-people-table">
-            <PeopleDetails />
             <Table striped>
+                <PeopleDetails/>
                 <thead>
                 <tr>
                     <th>Name</th>
