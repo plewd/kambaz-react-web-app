@@ -26,26 +26,78 @@ export default function Kambaz() {
             description: "New Description",
         },
     ]);
-    const fetchCourses = async () => {
+
+    const [enrolling, setEnrolling] = useState<boolean>(false);
+    // Update your findCoursesForUser function
+    const findCoursesForUser = async () => {
         try {
-            const courses = await userClient.findMyCourses();
+            // Check if currentUser exists before trying to access its properties
+            if (!currentUser) {
+                console.log("No user is logged in");
+                setCourses([]);  // Set empty courses array
+                return;
+            }
+
+            console.log("USER ID IS: " + currentUser._id);
+            const courses = await userClient.findCoursesForUser(currentUser._id);
             setCourses(courses);
         } catch (error) {
             console.error(error);
+            setCourses([]); // Set empty courses array on error
         }
     };
-    useEffect(() => {
-        fetchCourses();
-    }, [currentUser]);
-    const addNewCourse = async () => {
-        const newCourse = await userClient.createCourse(course);
-        setCourses([...courses, newCourse]);
-        fetchCourses();
+
+// Similarly update your fetchCourses function
+    const fetchCourses = async () => {
+        try {
+            // Check if currentUser exists
+            if (!currentUser) {
+                console.log("No user is logged in");
+                setCourses([]);
+                return;
+            }
+
+            const allCourses = await courseClient.fetchAllCourses();
+            const enrolledCourses = await userClient.findCoursesForUser(
+                currentUser._id
+            );
+
+            // Map through all courses and mark those the user is enrolled in
+            const courses = allCourses.map((course: any) => {
+                if (enrolledCourses.find((c: any) => c._id === course._id)) {
+                    return { ...course, enrolled: true };
+                } else {
+                    return course;
+                }
+            });
+
+            setCourses(courses);
+        } catch (error) {
+            console.error(error);
+            setCourses([]);
+        }
     };
-    const deleteThisCourse = async (courseId: string) => {
+
+// Update your useEffect to only run when currentUser is available
+    useEffect(() => {
+        // Only run if currentUser exists
+        if (currentUser) {
+            if (enrolling) {
+                fetchCourses();
+            } else {
+                findCoursesForUser();
+            }
+        }
+    }, [currentUser, enrolling]);
+
+    const addNewCourse = async () => {
+        const newCourse = await courseClient.createCourse(course);
+        setCourses([...courses, newCourse]);
+    };
+    const deleteCourse = async (courseId: string) => {
         const status = await courseClient.deleteCourse(courseId);
+        console.log(status)
         setCourses(courses.filter((course) => course._id !== courseId));
-        console.log(status);
     };
     const updateThisCourse = async () => {
         await courseClient.updateCourse(course);
@@ -59,6 +111,24 @@ export default function Kambaz() {
             })
         );
     };
+
+    const updateEnrollment = async (courseId: string, enrolled: boolean) => {
+        if (enrolled) {
+            await userClient.enrollIntoCourse(currentUser._id, courseId);
+        } else {
+            await userClient.unenrollFromCourse(currentUser._id, courseId);
+        }
+        setCourses(
+            courses.map((course) => {
+                if (course._id === courseId) {
+                    return { ...course, enrolled: enrolled };
+                } else {
+                    return course;
+                }
+            })
+        );
+    };
+
 
     return (
         <Session>
@@ -77,9 +147,11 @@ export default function Kambaz() {
                                         course={course}
                                         setCourse={setCourse}
                                         addNewCourse={addNewCourse}
-                                        deleteCourse={deleteThisCourse}
+                                        deleteCourse={deleteCourse}
                                         updateCourse={updateThisCourse}
-                                    />
+                                        enrolling={enrolling} 
+                                        setEnrolling={setEnrolling}
+                                        updateEnrollment={updateEnrollment}/>
                                 </ProtectedRoute>
                             }
                         />

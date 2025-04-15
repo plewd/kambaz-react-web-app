@@ -7,6 +7,7 @@ export default function StudentRouteProtected({
     children: any;
 }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+
     if (currentUser.role == "STUDENT") {
         return children;
     } else {
